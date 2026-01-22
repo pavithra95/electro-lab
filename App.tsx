@@ -1,17 +1,13 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReceiptData, ReceiptViewMode } from './types';
 import PhysicalReceipt from './components/PhysicalReceipt';
-import { extractReceiptData } from './services/geminiService';
 import { 
   FileText, 
-  Upload, 
   Plus, 
   Printer, 
   Trash2, 
   ChevronLeft, 
-  Loader2,
-  Camera,
   History
 } from 'lucide-react';
 
@@ -38,8 +34,6 @@ const App: React.FC = () => {
   const [view, setView] = useState<ReceiptViewMode>('list');
   const [receipts, setReceipts] = useState<ReceiptData[]>([]);
   const [currentReceipt, setCurrentReceipt] = useState<ReceiptData>(INITIAL_DATA);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Load from local storage
   useEffect(() => {
@@ -57,32 +51,6 @@ const App: React.FC = () => {
   const handleCreateNew = () => {
     setCurrentReceipt({ ...INITIAL_DATA, id: Date.now().toString(), createdAt: Date.now() });
     setView('edit');
-  };
-
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    setIsProcessing(true);
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const base64 = e.target?.result as string;
-      try {
-        const extracted = await extractReceiptData(base64);
-        setCurrentReceipt(prev => ({
-          ...prev,
-          ...extracted,
-          id: Date.now().toString(),
-          createdAt: Date.now()
-        }));
-        setView('edit');
-      } catch (err) {
-        alert("Failed to extract data. Please fill manually.");
-      } finally {
-        setIsProcessing(false);
-      }
-    };
-    reader.readAsDataURL(file);
   };
 
   const handleSave = () => {
@@ -125,30 +93,13 @@ const App: React.FC = () => {
           
           <div className="flex gap-2">
             {view === 'list' && (
-              <>
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isProcessing}
-                  className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition-colors disabled:opacity-50"
-                >
-                  {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
-                  AI Extract
-                </button>
-                <input 
-                  type="file" 
-                  ref={fileInputRef} 
-                  className="hidden" 
-                  accept="image/*" 
-                  onChange={handleFileUpload}
-                />
-                <button
-                  onClick={handleCreateNew}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-sm transition-all active:scale-95"
-                >
-                  <Plus className="w-4 h-4" />
-                  New Receipt
-                </button>
-              </>
+              <button
+                onClick={handleCreateNew}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-sm transition-all active:scale-95"
+              >
+                <Plus className="w-4 h-4" />
+                New Receipt
+              </button>
             )}
             
             {(view === 'edit' || view === 'preview') && (
@@ -165,14 +116,6 @@ const App: React.FC = () => {
       </nav>
 
       <main className="flex-1 max-w-7xl mx-auto w-full p-6">
-        {isProcessing && (
-          <div className="fixed inset-0 bg-white/80 backdrop-blur-sm z-[60] flex flex-col items-center justify-center no-print">
-            <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
-            <h2 className="text-xl font-semibold text-slate-800">Analyzing Receipt Image...</h2>
-            <p className="text-slate-500">Gemini is extracting details for you.</p>
-          </div>
-        )}
-
         {view === 'list' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -189,7 +132,7 @@ const App: React.FC = () => {
                   <FileText className="w-12 h-12 text-slate-300" />
                 </div>
                 <h3 className="text-lg font-medium text-slate-900 mb-1">No receipts found</h3>
-                <p className="text-slate-500 mb-6 max-w-xs">Start by creating a manual receipt or uploading an image for AI extraction.</p>
+                <p className="text-slate-500 mb-6 max-w-xs">Start by creating your first digital service receipt.</p>
                 <button
                   onClick={handleCreateNew}
                   className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm"
@@ -436,7 +379,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="text-center text-slate-400 text-sm no-print">
-              <p>The above layout mimics the physical pink/red carbon-copy receipts used by the lab.</p>
+              <p>Layout designed to match the physical receipt books.</p>
             </div>
           </div>
         )}

@@ -1,7 +1,5 @@
 {
-  "name": "Scanner Electro Lab",
-  "description": "A professional service receipt management system with AI-powered data extraction from physical receipt images.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "name": "Scanner Electro Lab - Digital Receipt System",
+  "description": "A professional service receipt management system.",
+  "requestFramePermissions": []
 }

@@ -55,7 +55,7 @@ const PhysicalReceipt: React.FC<PhysicalReceiptProps> = ({ data }) => {
           <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.noOfDays}</div>
         </div>
 
-        {/* Row 4 - Serial No (New Row) */}
+        {/* New Row for Serial No */}
         <div className="col-span-8 flex items-end gap-2">
           <label className={`whitespace-nowrap ${redText} font-semibold`}>Serial No :</label>
           <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.serialNo}</div>
@@ -72,7 +72,7 @@ const PhysicalReceipt: React.FC<PhysicalReceiptProps> = ({ data }) => {
         </div>
 
         {/* Status Checkboxes */}
-        <div className="col-span-12 flex items-center flex-wrap gap-x-6 gap-y-2 mt-4">
+        <div className="col-span-12 flex flex-wrap items-center gap-x-6 gap-y-2 mt-4">
           <label className={`${redText} font-semibold`}>Material Status :</label>
           {['Serviced', 'Beyond', 'Returned', 'Waiting for Spare'].map(status => (
             <div key={status} className="flex items-center gap-2">
