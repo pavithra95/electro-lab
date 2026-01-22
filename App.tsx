@@ -20,6 +20,7 @@ const INITIAL_DATA: ReceiptData = {
   inwardNo: '',
   partyName: '',
   materialName: '',
+  serialNo: '',
   customerFault: '',
   materialStatus: '',
   reasonFor: '',
@@ -300,6 +301,16 @@ const App: React.FC = () => {
               </div>
 
               <div className="md:col-span-2">
+                <label className={labelClasses}>Serial Number</label>
+                <input 
+                  type="text" 
+                  value={currentReceipt.serialNo} 
+                  onChange={e => setCurrentReceipt({...currentReceipt, serialNo: e.target.value})}
+                  className={inputClasses}
+                />
+              </div>
+
+              <div className="md:col-span-2">
                 <label className={labelClasses}>Customer Reported Fault</label>
                 <textarea 
                   value={currentReceipt.customerFault} 
@@ -319,6 +330,7 @@ const App: React.FC = () => {
                   <option value="Serviced">Serviced</option>
                   <option value="Beyond">Beyond</option>
                   <option value="Returned">Returned</option>
+                  <option value="Waiting for Spare">Waiting for Spare</option>
                 </select>
               </div>
 

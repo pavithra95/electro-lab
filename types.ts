@@ -4,8 +4,9 @@ export interface ReceiptData {
   inwardNo: string;
   partyName: string;
   materialName: string;
+  serialNo: string;
   customerFault: string;
-  materialStatus: 'Serviced' | 'Beyond' | 'Returned' | '';
+  materialStatus: 'Serviced' | 'Beyond' | 'Returned' | 'Waiting for Spare' | '';
   reasonFor: 'Beyond' | 'Returned' | '';
   plcHmiVersion: string;
   plcHmiBackupStatus: 'Yes' | 'No' | '';

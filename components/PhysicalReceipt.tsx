@@ -45,7 +45,7 @@ const PhysicalReceipt: React.FC<PhysicalReceiptProps> = ({ data }) => {
           <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.servicedDate}</div>
         </div>
 
-        {/* Row 3 */}
+        {/* Row 3 - Material Name */}
         <div className="col-span-8 flex items-end gap-2">
           <label className={`whitespace-nowrap ${redText} font-semibold`}>Material Name :</label>
           <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.materialName}</div>
@@ -55,20 +55,26 @@ const PhysicalReceipt: React.FC<PhysicalReceiptProps> = ({ data }) => {
           <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.noOfDays}</div>
         </div>
 
-        {/* Row 4 */}
+        {/* Row 4 - Serial No (New Row) */}
         <div className="col-span-8 flex items-end gap-2">
-          <label className={`whitespace-nowrap ${redText} font-semibold`}>Customer Fault :</label>
-          <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.customerFault}</div>
+          <label className={`whitespace-nowrap ${redText} font-semibold`}>Serial No :</label>
+          <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.serialNo}</div>
         </div>
         <div className="col-span-4 flex items-end gap-2 ml-4">
           <label className={`whitespace-nowrap ${redText} font-semibold`}>Service Cost :</label>
           <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.serviceCost}</div>
         </div>
 
+        {/* Row 5 - Customer Fault */}
+        <div className="col-span-12 flex items-end gap-2">
+          <label className={`whitespace-nowrap ${redText} font-semibold`}>Customer Fault :</label>
+          <div className={`flex-1 border-b-2 ${redBorder} min-h-[24px] px-2`}>{data.customerFault}</div>
+        </div>
+
         {/* Status Checkboxes */}
-        <div className="col-span-12 flex items-center gap-6 mt-4">
+        <div className="col-span-12 flex items-center flex-wrap gap-x-6 gap-y-2 mt-4">
           <label className={`${redText} font-semibold`}>Material Status :</label>
-          {['Serviced', 'Beyond', 'Returned'].map(status => (
+          {['Serviced', 'Beyond', 'Returned', 'Waiting for Spare'].map(status => (
             <div key={status} className="flex items-center gap-2">
               <div className={`w-5 h-5 border-2 ${redBorder} flex items-center justify-center`}>
                 {data.materialStatus === status && <span className={redText}>✓</span>}
@@ -117,7 +123,7 @@ const PhysicalReceipt: React.FC<PhysicalReceiptProps> = ({ data }) => {
         </div>
       </div>
       
-      {/* Decorative vertical line if needed */}
+      {/* Decorative vertical line */}
       <div className={`absolute top-0 bottom-0 left-[66%] w-px border-l ${redBorder} border-opacity-30 pointer-events-none`}></div>
     </div>
   );
